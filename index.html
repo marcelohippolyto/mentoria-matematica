@@ -17,6 +17,8 @@
     --prata: #c9d1de;
     --bronze: #d08a4e;
     --wa: #25d366;
+    --azul-claro: #14295a;
+    --azul-escuro: #070d1c;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -31,7 +33,6 @@
 
   /* Hero */
   .hero {
-    background: radial-gradient(900px 500px at 85% 0%, #1d2f5a 0%, transparent 60%), var(--bg);
     padding: 56px 0 72px;
   }
   .hero-grid {
@@ -73,10 +74,22 @@
     object-position: center 20%; border-radius: 24px; display: block;
   }
 
+  /* Tons de azul alternados com degradê: o fim de cada seção já vira a cor da próxima */
+  .tom-claro { background: linear-gradient(180deg, var(--azul-claro) calc(100% - 200px), var(--azul-escuro) 100%); --card: #0d1d42; --muted: #b3c2dc; }
+  .tom-escuro { background: linear-gradient(180deg, var(--azul-escuro) calc(100% - 200px), var(--azul-claro) 100%); --card: #111c36; }
+
   section { padding: 72px 0; }
   h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 8px; }
   .sub { color: var(--muted); margin-bottom: 36px; max-width: 62ch; }
   .sub.intro { font-size: 1.15rem; color: var(--text); margin-bottom: 20px; }
+
+  /* Para quem é */
+  .badges { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+  .badge {
+    background: var(--card); border: 1px solid rgba(255,255,255,.08); border-radius: 16px;
+    padding: 20px 12px; text-align: center; font-weight: 700;
+  }
+  .badge .disc { display: block; margin-bottom: 8px; font-size: 2.4rem; }
 
   /* Olimpíadas */
   .medals { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
@@ -101,10 +114,10 @@
   .step p { color: var(--muted); font-size: .95rem; }
 
   /* CTA */
-  .cta { background: linear-gradient(135deg, #1d2f5a, #12203f); text-align: center; border-radius: 28px; padding: 56px 24px; }
+  .cta { background: linear-gradient(135deg, #14295a, #1c3a78); border: 1px solid rgba(255,255,255,.1); text-align: center; border-radius: 28px; padding: 56px 24px; }
   .cta p { color: var(--muted); max-width: 52ch; margin: 8px auto 28px; }
 
-  footer { text-align: center; color: var(--muted); font-size: .85rem; padding: 32px 0 48px; }
+  footer { background: var(--azul-claro); text-align: center; color: var(--muted); font-size: .85rem; padding: 32px 0 48px; }
   footer a { color: var(--accent); }
 
   .float-wa {
@@ -114,8 +127,19 @@
   }
   .float-wa svg { width: 30px; height: 30px; fill: #06260f; }
 
+  /* Palavras surgindo ao rolar a página */
+  .js .w { display: inline-block; opacity: 0; transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s ease; transition-delay: calc(var(--i) * 45ms); }
+  .js .reveal.in .w { opacity: 1; transform: none; }
+  .js .fade { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; transition-delay: var(--d, 0ms); }
+  .js .fade.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .js .w, .js .fade { opacity: 1; transform: none; transition: none; }
+  }
+
   @media (max-width: 820px) {
     .hero-grid, .steps { grid-template-columns: 1fr; }
+    .badges { grid-template-columns: repeat(2, 1fr); }
     .photo-wrap { order: -1; width: min(280px, 80%); }
     .hero { padding-top: 40px; }
   }
@@ -123,7 +147,7 @@
 </head>
 <body>
 
-<header class="hero">
+<header class="hero tom-escuro">
   <div class="container hero-grid">
     <div>
       <span class="tag">Aulas e Mentoria</span>
@@ -143,7 +167,22 @@
   </div>
 </header>
 
-<section id="olimpiadas" style="background: var(--bg-2);">
+<section id="para-quem-e" class="tom-claro">
+  <div class="container">
+    <h2>Para quem é?</h2>
+    <p class="sub" style="margin-bottom:0">Para todo aluno que está com dificuldade com matemática, independente do cenário, seja ensino fundamental, ensino médio, vestibular, olimpíadas, faculdade ou concurso.</p>
+    <div class="badges">
+      <div class="badge"><span class="disc">🎒</span>Ensino Fundamental</div>
+      <div class="badge"><span class="disc">📚</span>Ensino Médio</div>
+      <div class="badge"><span class="disc">🎓</span>Vestibular</div>
+      <div class="badge"><span class="disc">🏅</span>Olimpíadas</div>
+      <div class="badge"><span class="disc">🏫</span>Faculdade</div>
+      <div class="badge"><span class="disc">🏛️</span>Concurso</div>
+    </div>
+  </div>
+</section>
+
+<section id="olimpiadas" class="tom-escuro">
   <div class="container">
     <h2>Conquistas</h2>
     <div class="medals approvals">
@@ -168,7 +207,7 @@
   </div>
 </section>
 
-<section id="como-funciona">
+<section id="como-funciona" class="tom-claro">
   <div class="container">
     <h2>Como funciona</h2>
     <p class="sub">Um caminho simples para começar.</p>
@@ -180,7 +219,7 @@
   </div>
 </section>
 
-<section style="padding-top:0">
+<section class="tom-escuro">
   <div class="container">
     <div class="cta">
       <h2>Vamos começar a sua preparação?</h2>
@@ -203,6 +242,52 @@
 <a class="float-wa" href="https://wa.me/5585989493359" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 3.5A11.9 11.9 0 0 0 12 0C5.4 0 0 5.4 0 12c0 2.1.6 4.200 1.600 6L0 24l6.200-1.600A12 12 0 0 0 12 24c6.600 0 12-5.400 12-12 0-3.200-1.200-6.200-3.500-8.500zm-3.100 11c-.3-.1-1.800-.9-2-1-.3-.1-.5-.1-.7.100-.2.300-.8 1-.9 1.200-.2.200-.3.200-.6.100-.3-.1-1.200-.4-2.300-1.400-.9-.8-1.400-1.700-1.600-2-.2-.3 0-.5.100-.6l.4-.5c.1-.2.200-.3.300-.5.100-.2 0-.4 0-.5-.1-.1-.7-1.600-.9-2.200-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.100-.8.400-.3.300-1 1-1 2.500s1.100 2.900 1.200 3.100c.1.200 2.100 3.200 5.100 4.500.7.300 1.300.5 1.700.6.700.2 1.400.2 1.900.1.600-.1 1.800-.7 2-1.400.3-.7.300-1.300.2-1.400-.1-.1-.3-.2-.6-.3z"/></svg>
 </a>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  root.classList.add('js');
+
+  // Divide o texto em palavras (mantém os elementos internos, como o destaque do título)
+  function splitWords(node, counter) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+      if (child.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var w = document.createElement('span');
+          w.className = 'w';
+          w.style.setProperty('--i', Math.min(counter.n++, 24));
+          w.textContent = part;
+          frag.appendChild(w);
+        });
+        child.parentNode.replaceChild(frag, child);
+      } else if (child.nodeType === 1) {
+        splitWords(child, counter);
+      }
+    });
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('h1, h2, .lead, .sub, .cta p').forEach(function (el) {
+    splitWords(el, { n: 0 });
+    el.classList.add('reveal');
+    io.observe(el);
+  });
+  document.querySelectorAll('.badge, .medal, .step').forEach(function (el, i) {
+    el.classList.add('fade');
+    el.style.setProperty('--d', ((i % 4) * 90) + 'ms');
+    io.observe(el);
+  });
+})();
+</script>
 
 </body>
 </html>
